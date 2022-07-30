@@ -1,15 +1,31 @@
 import Head from "next/head";
 import Editor from "@monaco-editor/react";
 import { useRef } from "react";
+import axios from "axios";
 
 export default function Home() {
   const editorRef = useRef(null);
   const handleEditorDidMount = (editor, monaco) => {
     editorRef.current = editor;
   };
+
   const showValue = () => {
     console.log(editorRef.current.getValue());
   };
+
+  const handleSubmit = async () => {
+    try {
+      const response = await axios.post("http://localhost:5000/compile", {
+        language: "python",
+        code: editorRef.current.getValue(),
+      });
+
+      console.log(response.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <div>
       <Head>
@@ -25,6 +41,7 @@ export default function Home() {
         defaultLanguage="cpp"
         defaultValue="//some comment"
       />
+      <button onClick={handleSubmit}>Run Code</button>
     </div>
   );
 }
