@@ -26,6 +26,12 @@ export class CompileService {
       throw new HttpException(err, 500);
     }
   }
+
+  /**
+   * This function compiles the program and runs the program
+   * @param filePath accepts the file path
+   * @returns none
+   */
   public async compile(filePath: string) {
     console.log('Inside compile');
 
@@ -37,9 +43,13 @@ export class CompileService {
     }
   }
 
+  /**
+   * This function runs the program to get the output
+   *
+   * @param filePath accepts the file path
+   * @returns
+   */
   public async runCommand(filePath: string) {
-    console.log(filePath);
-
     return new Promise((resolve, reject) => {
       const child = spawn('python3', [filePath]);
       child.stdout.on('data', (data) => {
