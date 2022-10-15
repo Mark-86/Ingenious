@@ -1,10 +1,13 @@
 import Head from "next/head";
 import Editor from "@monaco-editor/react";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 
 export default function Home() {
   const editorRef = useRef(null);
+
+  const [language, setLanguage] = useState("python");
+
   const handleEditorDidMount = (editor, monaco) => {
     editorRef.current = editor;
   };
@@ -16,7 +19,7 @@ export default function Home() {
   const handleSubmit = async () => {
     try {
       const response = await axios.post("http://localhost:5000/compile", {
-        language: "python",
+        language,
         code: editorRef.current.getValue(),
       });
 
@@ -25,6 +28,10 @@ export default function Home() {
       console.log(err);
     }
   };
+
+  useEffect(() => {
+    console.log(language);
+  }, [language]);
 
   return (
     <div>
@@ -37,10 +44,21 @@ export default function Home() {
       <button onClick={showValue}>Show Value</button>
       <Editor
         height="90vh"
+        width={"80vw"}
+        theme="vs-dark"
         onMount={handleEditorDidMount}
         defaultLanguage="cpp"
-        defaultValue="//some comment"
+        defaultValue="#Some comment"
       />
+      <select
+        onChange={(event) => {
+          setLanguage(event.target.value);
+        }}
+      >
+        <option value={"python"}>Python</option>
+        <option value={"cpp"}>C++</option>
+        <option value={"javascript"}>Javascript</option>
+      </select>
       <button onClick={handleSubmit}>Run Code</button>
     </div>
   );

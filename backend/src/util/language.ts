@@ -1,7 +1,7 @@
 const extensionList = {
   'python': 'py',
   'c': 'c',
-  'c++': 'cpp',
+  'cpp': 'cpp',
   'c#': 'cs',
   'java': 'java',
   'javascript': 'js',

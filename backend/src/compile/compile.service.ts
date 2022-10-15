@@ -2,7 +2,7 @@ import { HttpException, Injectable } from '@nestjs/common';
 import { CreateCompileDto } from './dto/create-compile.dto';
 import { promises } from 'fs';
 import { getExtension } from 'src/util/language';
-import { spawn } from 'child_process';
+import { runCommand } from 'src/util/command';
 
 @Injectable()
 export class CompileService {
@@ -15,7 +15,7 @@ export class CompileService {
     try {
       await promises.writeFile(filePath, code);
 
-      const result = await this.compile(filePath);
+      const result = await this.compile(language, filePath);
 
       return {
         fileName,
@@ -32,32 +32,32 @@ export class CompileService {
    * @param filePath accepts the file path
    * @returns none
    */
-  public async compile(filePath: string) {
+  public async compile(language: string, filePath: string) {
     console.log('Inside compile');
 
     try {
-      const result = await this.runCommand(`${filePath}`);
+      const result = await runCommand(language, filePath);
       return result;
     } catch (err) {
       throw new HttpException('Compilation error' + err, 500);
     }
   }
 
-  /**
-   * This function runs the program to get the output
-   *
-   * @param filePath accepts the file path
-   * @returns
-   */
-  public async runCommand(filePath: string) {
-    return new Promise((resolve, reject) => {
-      const child = spawn('python3', [filePath]);
-      child.stdout.on('data', (data) => {
-        resolve(data.toString());
-      });
-      child.stderr.on('data', (data) => {
-        reject(data.toString());
-      });
-    });
-  }
+  // /**
+  //  * This function runs the program to get the output
+  //  *
+  //  * @param filePath accepts the file path
+  //  * @returns
+  //  */
+  // public async runCommand(filePath: string) {
+  //   return new Promise((resolve, reject) => {
+  //     const child = spawn('python3', [filePath]);
+  //     child.stdout.on('data', (data) => {
+  //       resolve(data.toString());
+  //     });
+  //     child.stderr.on('data', (data) => {
+  //       reject(data.toString());
+  //     });
+  //   });
+  // }
 }
