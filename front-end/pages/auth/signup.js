@@ -30,7 +30,8 @@ export default function signup() {
           />
         </div>
         <button
-          className="bg-gradient-to-r text-white from-primary to-secondary px-20 py-5 rounded-3xl drop-shadow-xl font-extrabold text-xl tracking-widest "
+          // bg-gradient-to-r text-white from-primary to-secondary
+          className="gradientBg text-white px-20 py-5 rounded-3xl drop-shadow-xl font-extrabold text-xl tracking-widest "
           type={"submit"}
         >
           Submit

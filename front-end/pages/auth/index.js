@@ -30,7 +30,7 @@ export default function AuthPage() {
           />
         </div>
         <button
-          className="bg-gradient-to-r text-white from-primary to-secondary px-20 py-5 rounded-3xl drop-shadow-xl font-extrabold text-xl tracking-widest "
+          className="text-white gradientBg px-20 py-5 rounded-3xl drop-shadow-xl font-extrabold text-xl tracking-widest "
           type={"submit"}
         >
           Submit

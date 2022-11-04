@@ -7,6 +7,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        main: ["VT323", "monospace"],
+      },
       colors: {
         bgPrimary: "#16213E",
         bgSecondary: "#0F3460",
