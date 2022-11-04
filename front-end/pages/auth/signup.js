@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export default function AuthPage() {
+export default function signup() {
   const handleSubmit = (event) => {
     event.preventDefault();
   };
@@ -11,7 +11,7 @@ export default function AuthPage() {
         onSubmit={handleSubmit}
       >
         <h3 className=" font-extrabold tracking-widest text-transparent text-5xl pb-10 bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600 drop-shadow-xl">
-          Login
+          Sign Up
         </h3>
         <div>
           <input
@@ -36,9 +36,9 @@ export default function AuthPage() {
           Submit
         </button>
         <p className="text-white/60">
-          New to our platform?{" "}
-          <Link href={"/auth/signup"}>
-            <span className="underline cursor-pointer">Sign Up!</span>
+          Already have an account?
+          <Link href={"/auth"}>
+            <span className="underline pl-1 cursor-pointer">Login</span>
           </Link>
         </p>
       </form>
