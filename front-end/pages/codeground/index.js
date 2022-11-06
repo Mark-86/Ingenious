@@ -63,9 +63,9 @@ export default function Home() {
               <div className="mx-auto">
                 <button
                   className="gradientBg font-bold text-xl text-white px-8 py-4 rounded-3xl shadow-lg shadow-cyan-200/10"
-                  onClick={showValue}
+                  onClick={handleSubmit}
                 >
-                  Show Value
+                  Run Code
                 </button>
               </div>
             </div>
@@ -84,7 +84,6 @@ export default function Home() {
                   </p>
                 );
               })}
-              <p className="font-mono font-semibold">Hello world</p>
             </div>
           </div>
         </div>

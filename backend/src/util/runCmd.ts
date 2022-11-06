@@ -52,19 +52,21 @@ export const runCpp = async (filePath: string): Promise<string> => {
 };
 
 export const runJs = async (filePath: string): Promise<string> => {
+  let result = '';
   return new Promise<string>((resolve, reject) => {
     const runner = spawn('node', [filePath]);
 
     runner.stdout.on('data', (data) => {
-      console.log(data);
-
-      resolve(data.toString());
+      result += data.toString();
     });
     runner.stderr.on('data', (data) => {
       reject(data.toString());
     });
     runner.stderr.on('error', (data) => {
       reject(data.toString());
+    });
+    runner.on('exit', () => {
+      resolve(result);
     });
   });
 };
