@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "global": "^4.4.0",
+    "ts-node": "^10.9.1"
+  }
+}
