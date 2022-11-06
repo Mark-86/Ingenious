@@ -7,7 +7,7 @@ const Main = () => {
       <p className="text-gray-300 text-2xl ">
         Our community allows you to become the best coder of yourself!
       </p>
-      <Link href={"codeground"}>
+      <Link href={"auth"}>
         <div className="gradientBg cursor-pointer rounded-full px-10 text-2xl mt-5 py-5 flex items-center justify-between">
           <button className="font-extrabold text-white mr-10">
             Get Started

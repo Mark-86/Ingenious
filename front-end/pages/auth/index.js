@@ -1,9 +1,19 @@
 import Link from "next/link";
+import { useState } from "react";
+import { useRouter } from "next/router";
 
 export default function AuthPage() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const router = useRouter();
+
   const handleSubmit = (event) => {
     event.preventDefault();
+    console.log(username, password);
+    router.replace("codeground");
   };
+
   return (
     <section className="h-screen bg-bgPrimary flex items-center justify-center">
       <form
@@ -17,6 +27,8 @@ export default function AuthPage() {
           <input
             className="px-5 text-white py-3 rounded-3xl bg-bgPrimary drop-shadow-2xl"
             id="name"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
             type={"text"}
             placeholder="Username"
           />{" "}
@@ -25,6 +37,8 @@ export default function AuthPage() {
           <input
             className="px-5 py-3 text-white rounded-3xl bg-bgPrimary drop-shadow-2xl"
             id="name"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             type={"password"}
             placeholder="Password"
           />
