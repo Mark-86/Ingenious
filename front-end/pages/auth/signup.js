@@ -13,10 +13,13 @@ export default function signup() {
     event.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:8000/auth/register", {
-        email,
-        password,
-      });
+      const response = await axios.post(
+        "http://cloud.zuvatech.com:8000/auth/register",
+        {
+          email,
+          password,
+        }
+      );
       router.replace("/codeground");
     } catch (err) {
       alert(err.response.data.detail);
