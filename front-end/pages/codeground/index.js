@@ -19,10 +19,13 @@ export default function Home() {
 
   const handleSubmit = async () => {
     try {
-      const response = await axios.post("http://localhost:5000/compile", {
-        language,
-        code: editorRef.current.getValue(),
-      });
+      const response = await axios.post(
+        "http://cloud.zuvatech.com:5000/compile",
+        {
+          language,
+          code: editorRef.current.getValue(),
+        }
+      );
 
       setResult(response.data.result);
     } catch (err) {

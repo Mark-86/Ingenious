@@ -12,10 +12,13 @@ export default function AuthPage() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post("http://localhost:8000/auth/login", {
-        email,
-        password,
-      });
+      const response = await axios.post(
+        "http://cloud.zuvatech.com:8000/auth/login",
+        {
+          email,
+          password,
+        }
+      );
       router.replace("codeground");
     } catch (err) {
       console.error(err);
