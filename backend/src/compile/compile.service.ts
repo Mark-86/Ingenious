@@ -33,8 +33,6 @@ export class CompileService {
    * @returns none
    */
   public async compile(language: string, filePath: string) {
-    console.log('Inside compile');
-
     try {
       const result = await runCommand(language, filePath);
       return result;

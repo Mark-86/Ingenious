@@ -1,4 +1,5 @@
 import { exec, spawn } from 'child_process';
+import { promises } from 'fs';
 
 export const runPython = async (filePath: string): Promise<string> => {
   return new Promise<string>((resolve, reject) => {
@@ -14,14 +15,22 @@ export const runPython = async (filePath: string): Promise<string> => {
       reject(data.toString());
       childProcess.kill();
     });
+
+    childProcess.on('exit', async () => {
+      try {
+        await promises.rm(filePath);
+      } catch (err) {
+        console.error(err);
+      }
+    });
   });
 };
 
 export const runCpp = async (filePath: string): Promise<string> => {
   return new Promise<string>((resolve, reject) => {
-    // const childProcess = spawn('g++', [filePath]);
+    let execPath = filePath.split('.')[0];
 
-    exec(`g++ ${filePath}`, (error, stdout, stderr) => {
+    exec(`g++ ${filePath} -o ${execPath}`, (error, stdout, stderr) => {
       if (error) {
         console.error(`Error: ${error.message}`);
         reject(error.message);
@@ -32,7 +41,7 @@ export const runCpp = async (filePath: string): Promise<string> => {
         reject(error.message);
         return;
       }
-      const runner = spawn(`${filePath}`);
+      const runner = spawn(`${execPath}`, []);
 
       // inputs if any
       // TODO: Handle input from user
@@ -46,6 +55,11 @@ export const runCpp = async (filePath: string): Promise<string> => {
       });
       runner.stderr.on('error', (data) => {
         reject(data.toString());
+      });
+
+      runner.on('exit', async () => {
+        await promises.rm(execPath);
+        await promises.rm(filePath);
       });
     });
   });
@@ -65,8 +79,10 @@ export const runJs = async (filePath: string): Promise<string> => {
     runner.stderr.on('error', (data) => {
       reject(data.toString());
     });
-    runner.on('exit', () => {
+    runner.on('exit', async () => {
       resolve(result);
+
+      await promises.rm(filePath);
     });
   });
 };

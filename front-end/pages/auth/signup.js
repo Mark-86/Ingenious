@@ -1,8 +1,26 @@
 import Link from "next/link";
+import { useState } from "react";
+import axios from "axios";
+import { useRouter } from "next/router";
 
 export default function signup() {
-  const handleSubmit = (event) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const router = useRouter();
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
+
+    try {
+      const response = await axios.post("http://localhost:8000/auth/register", {
+        email,
+        password,
+      });
+      router.replace("/codeground");
+    } catch (err) {
+      alert(err.response.data.detail);
+    }
   };
   return (
     <section className="h-screen bg-bgPrimary flex items-center justify-center">
@@ -17,14 +35,18 @@ export default function signup() {
           <input
             className="px-5 text-white py-3 rounded-3xl bg-bgPrimary drop-shadow-2xl"
             id="name"
-            type={"text"}
-            placeholder="Username"
+            type={"email"}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Email"
           />{" "}
         </div>
         <div>
           <input
             className="px-5 py-3 text-white rounded-3xl bg-bgPrimary drop-shadow-2xl"
             id="name"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             type={"password"}
             placeholder="Password"
           />
