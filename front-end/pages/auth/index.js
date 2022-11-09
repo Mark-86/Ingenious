@@ -1,17 +1,26 @@
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/router";
+import axios from "axios";
 
 export default function AuthPage() {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const router = useRouter();
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(username, password);
-    router.replace("codeground");
+    try {
+      const response = await axios.post("http://localhost:8000/auth/login", {
+        email,
+        password,
+      });
+      router.replace("codeground");
+    } catch (err) {
+      console.error(err);
+      alert(err.response.data.detail);
+    }
   };
 
   return (
@@ -27,16 +36,18 @@ export default function AuthPage() {
           <input
             className="px-5 text-white py-3 rounded-3xl bg-bgPrimary drop-shadow-2xl"
             id="name"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            type={"text"}
-            placeholder="Username"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            type={"email"}
+            placeholder="Email"
           />{" "}
         </div>
         <div>
           <input
             className="px-5 py-3 text-white rounded-3xl bg-bgPrimary drop-shadow-2xl"
             id="name"
+            required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             type={"password"}
