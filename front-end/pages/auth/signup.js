@@ -17,6 +17,7 @@ export default function signup() {
         email,
         password,
       });
+      router.replace("/codeground");
     } catch (err) {
       alert(err.response.data.detail);
     }
